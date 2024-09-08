@@ -1,0 +1,122 @@
+// Define the BTNode class (nodes of the tree)
+class BTNode {
+    constructor(value) {
+        this.val = value;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+// Define the BST class (Binary Search Tree)
+class BST {
+    constructor() {
+        this.root = null;  // Initially, the tree is empty
+    }
+
+    // Add a value to the tree
+    add(val) {
+        const newNode = new BTNode(val);
+
+        // If the tree is empty, set root to the new node
+        if (this.root === null) {
+            this.root = newNode;
+            return this;
+        }
+
+        // Otherwise, insert the node at the appropriate position
+        let current = this.root;
+        while (true) {
+            if (val < current.val) {
+                // Move to the left subtree
+                if (current.left === null) {
+                    current.left = newNode;
+                    return this;
+                }
+                current = current.left;
+            } else {
+                // Move to the right subtree (allow duplicates)
+                if (current.right === null) {
+                    current.right = newNode;
+                    return this;
+                }
+                current = current.right;
+            }
+        }
+    }
+
+    // Check if a value exists in the tree
+    contains(val) {
+        let current = this.root;
+        while (current !== null) {
+            if (val === current.val) {
+                return true;  // Value found
+            } else if (val < current.val) {
+                current = current.left;  // Move left
+            } else {
+                current = current.right;  // Move right
+            }
+        }
+        return false;  // Value not found
+    }
+
+    // Return the minimum value in the tree
+    min() {
+        if (this.root === null) {
+            return null;  // Tree is empty
+        }
+        let current = this.root;
+        while (current.left !== null) {
+            current = current.left;  // Move to the leftmost node
+        }
+        return current.val;  // This is the smallest value
+    }
+
+    // Return the maximum value in the tree
+    max() {
+        if (this.root === null) {
+            return null;  // Tree is empty
+        }
+        let current = this.root;
+        while (current.right !== null) {
+            current = current.right;  // Move to the rightmost node
+        }
+        return current.val;  // This is the largest value
+    }
+
+    // Return the size (number of nodes) in the tree
+    size() {
+        // Helper function for recursion
+        function countNodes(node) {
+            if (node === null) {
+                return 0;
+            }
+            return 1 + countNodes(node.left) + countNodes(node.right);
+        }
+
+        return countNodes(this.root);
+    }
+
+    // Check if the tree is empty
+    isEmpty() {
+        return this.root === null;
+    }
+}
+
+// Example usage:
+const bst = new BST();
+
+// Add values
+bst.add(10);
+bst.add(5);
+bst.add(15);
+bst.add(3);
+bst.add(7);
+bst.add(12);
+bst.add(18);
+
+console.log("Contains 7:", bst.contains(7));  // Output: true
+console.log("Contains 20:", bst.contains(20));  // Output: false
+console.log("Minimum value:", bst.min());  // Output: 3
+console.log("Maximum value:", bst.max());  // Output: 18
+console.log("Size of the tree:", bst.size());  // Output: 7
+console.log("Is the tree empty?", bst.isEmpty());  // Output: false
