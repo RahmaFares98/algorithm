@@ -1,0 +1,75 @@
+# Define the Node class for the linked list
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+# Define the Stack class using a linked list
+class Stack:
+    def __init__(self):
+        self.top = None  # The top is equivalent to the head of the linked list
+
+    # Method to check if the stack is empty
+    def is_empty(self):
+        return self.top is None
+
+    # Method to push an element onto the stack
+    def push(self, data):
+        new_node = Node(data)
+        new_node.next = self.top  # Point the new node to the current top
+        self.top = new_node       # The new node becomes the new top
+
+    # Method to pop an element from the stack
+    def pop(self):
+        if self.is_empty():
+            print("Stack is empty")
+            return None
+        popped_node = self.top
+        self.top = self.top.next  # The next node becomes the new top
+        return popped_node.data
+
+    # Method to peek at the top element without removing it
+    def peek(self):
+        if self.is_empty():
+            print("Stack is empty")
+            return None
+        return self.top.data
+
+    # Method to display the stack
+    def display(self):
+        if self.is_empty():
+            print("Stack is empty")
+            return
+        current = self.top
+        while current:
+            print(current.data, end=" -> ")
+            current = current.next
+        print("None")
+
+# Example usage
+if __name__ == "__main__":
+    stack = Stack()
+
+    # Push elements onto the stack
+    stack.push(10)
+    stack.push(20)
+    stack.push(30)
+    stack.push(40)
+
+    # Display the stack
+    print("Stack after pushes:")
+    stack.display()  # Output: 40 -> 30 -> 20 -> 10 -> None
+
+    # Peek at the top element
+    print("Top element:", stack.peek())  # Output: 40
+
+    # Pop elements from the stack
+    print("Popped:", stack.pop())  # Output: 40
+    print("Popped:", stack.pop())  # Output: 30
+
+    # Display the stack after pops
+    print("Stack after pops:")
+    stack.display()  # Output: 20 -> 10 -> None
+
+    # Peek at the top element again
+    print("Top element:", stack.peek())  # Output: 20
