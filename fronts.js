@@ -1,3 +1,7 @@
+
+
+
+
 class Node {
     constructor(data) {
         this.data = data;
@@ -14,16 +18,24 @@ class SLL {
     addFront(value) {
         const newNode = new Node(value);
         newNode.next = this.head;
-        this.head = newNode;
-        return this.head;
-    }
+        if(!this.head) {
+            this.head = newNode;
+                return this;
+            }
+            // If the list is not empty, assign the head to be the next node to the new node (Blue Arrow in picture above)
+            newNode.next = this.head;
+            // Then finally assign the new_node to be the new head of the list (Red Arrow in picture above)
+            this.head = newNode;
+            return this;
+        }
+    
 
     // Method to remove the head node from the list
     removeFront() {
         if (this.head === null) {
             return null;
         }
-        this.head = this.head.next;
+        this.head = this.head.next;//i make pointer point on next node so ! the previous node not appear and it's remove 
         return this.head;
     }
 
